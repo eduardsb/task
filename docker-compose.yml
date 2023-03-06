@@ -1,0 +1,35 @@
+version: '3.9'
+services:
+  database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  api:
+    build: ./api
+    restart: always
+    environment:
+      DB_HOST: database
+      NODE_ENV: production
+    ports:
+      - '3333:3333'
+    volumes:
+      - .:/app
+    depends_on:
+      - database
+  frontend:
+    build: ./web
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    environment:
+      - REACT_APP_ENDPOINT=http://127.0.0.1:3333
+volumes:
+  postgres-data:

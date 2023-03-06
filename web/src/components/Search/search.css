@@ -1,0 +1,15 @@
+.search {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+}
+
+.search-container {
+  position: relative;
+}
+
+.clear {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+}
